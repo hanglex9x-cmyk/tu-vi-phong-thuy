@@ -353,7 +353,7 @@ function gvizDate(v){
 }
 async function loadSheetTab(sheetId, tab){
   const url = "https://docs.google.com/spreadsheets/d/" + sheetId +
-              "/gviz/tq?tqx=out:json&sheet=" + encodeURIComponent(tab);
+              "/gviz/tq?tqx=out:json&headers=1&sheet=" + encodeURIComponent(tab);
   const res = await fetch(url);
   if (!res.ok) throw new Error("HTTP " + res.status);
   const text = await res.text();
@@ -361,8 +361,13 @@ async function loadSheetTab(sheetId, tab){
   if (!m) throw new Error("Định dạng dữ liệu không đúng");
   const json = JSON.parse(m[1]);
   if (json.status === "error") throw new Error(json.errors ? json.errors[0].detailed_message : "Lỗi sheet");
-  const cols = json.table.cols.map(c => c.label);
-  return json.table.rows.map(r => {
+  let cols = json.table.cols.map(c => c.label);
+  let rows = json.table.rows;
+  if (cols.every(function(l){ return !l; }) && rows.length){
+    cols = rows[0].c.map(function(cell){ return cell && cell.v != null ? String(cell.v) : ""; });
+    rows = rows.slice(1);
+  }
+  return rows.map(r => {
     const o = {};
     cols.forEach((label, i) => {
       const cell = r.c[i];
