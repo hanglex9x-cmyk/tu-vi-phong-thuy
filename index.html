@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tử Vi &amp; Phong Thủy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#150d28; --bg2:#1f1338; --card:#241743; --card2:#2c1d52;
+  --gold:#e3b64f; --gold2:#f5d67b; --text:#f3ecdd; --muted:#b9aed6;
+  --line:rgba(227,182,79,.25); --radius:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:"Be Vietnam Pro",-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  background:radial-gradient(1200px 600px at 50% -80px,#3a2566 0%,var(--bg) 55%) fixed,var(--bg);
+  color:var(--text); line-height:1.65; overflow-x:hidden; min-height:100vh;
+}
+.wrap{max-width:940px;margin:0 auto;padding:0 14px 60px}
+header.site{
+  text-align:center;padding:34px 12px 18px;
+  background:linear-gradient(180deg,rgba(227,182,79,.10),transparent);
+}
+header.site h1{
+  font-size:1.7rem;letter-spacing:.5px;color:var(--gold2);
+  text-shadow:0 2px 12px rgba(227,182,79,.25);
+}
+header.site p{color:var(--muted);font-size:.95rem;margin-top:6px}
+nav.tabs{
+  position:sticky;top:0;z-index:50;display:flex;gap:8px;overflow-x:auto;
+  padding:10px 12px;background:rgba(21,13,40,.96);border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);-webkit-overflow-scrolling:touch;
+}
+nav.tabs button{
+  flex:0 0 auto;border:1px solid var(--line);background:var(--card);color:var(--text);
+  padding:9px 16px;border-radius:999px;font-size:.95rem;cursor:pointer;font-family:inherit;
+}
+nav.tabs button.active{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#2a1a05;font-weight:700;border-color:transparent}
+.status{
+  margin:14px 0;padding:10px 14px;border:1px dashed var(--line);border-radius:var(--radius);
+  color:var(--muted);font-size:.88rem;background:rgba(227,182,79,.05);
+}
+section.page{display:none;animation:fade .25s ease}
+section.page.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h2.sec{color:var(--gold2);font-size:1.25rem;margin:22px 0 12px;border-left:4px solid var(--gold);padding-left:10px}
+.card{
+  background:linear-gradient(180deg,var(--card2),var(--card));
+  border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;
+}
+.card h3{color:var(--gold2);font-size:1.05rem;margin-bottom:6px}
+.muted{color:var(--muted);font-size:.9rem}
+.grid{display:grid;gap:12px}
+.grid.zodiac{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
+.zbtn{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  color:var(--text);padding:16px 8px;font-size:1rem;cursor:pointer;font-family:inherit;
+}
+.zbtn:hover,.zbtn:focus{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
+.zbtn .em{font-size:1.6rem;display:block;margin-bottom:6px}
+.list-item{
+  display:block;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);
+  border-radius:var(--radius);padding:14px 16px;margin-bottom:10px;color:var(--text);
+  cursor:pointer;font-family:inherit;font-size:1rem;
+}
+.list-item:hover{border-color:var(--gold)}
+.list-item .tag{display:inline-block;font-size:.75rem;color:#2a1a05;background:var(--gold2);
+  border-radius:999px;padding:2px 10px;margin-bottom:6px;font-weight:600}
+.list-item .date{color:var(--muted);font-size:.82rem}
+.backbtn{
+  background:none;border:1px solid var(--line);color:var(--gold2);border-radius:999px;
+  padding:7px 16px;cursor:pointer;font-family:inherit;margin-bottom:12px;font-size:.9rem;
+}
+.article-body p{margin-bottom:14px;text-align:justify}
+.score{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.score span{background:rgba(227,182,79,.12);border:1px solid var(--line);border-radius:999px;
+  padding:4px 12px;font-size:.85rem}
+.bigscore{font-size:2.2rem;color:var(--gold2);font-weight:700}
+form.frm label{display:block;font-size:.9rem;color:var(--muted);margin:12px 0 4px}
+form.frm input,form.frm select,form.frm textarea{
+  width:100%;padding:11px 12px;border-radius:10px;border:1px solid var(--line);
+  background:#180f30;color:var(--text);font-size:1rem;font-family:inherit;
+}
+form.frm textarea{min-height:90px;resize:vertical}
+.btn{
+  display:inline-block;margin-top:16px;padding:12px 26px;border:none;border-radius:999px;
+  background:linear-gradient(180deg,var(--gold2),var(--gold));color:#2a1a05;
+  font-weight:700;font-size:1rem;cursor:pointer;font-family:inherit;
+}
+.btn:active{transform:scale(.98)}
+.result{margin-top:18px}
+.kv{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line);font-size:.96rem}
+.kv b{color:var(--gold2);text-align:right}
+.note{font-size:.85rem;color:var(--muted);margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
+.success{background:rgba(120,200,120,.12);border:1px solid rgba(120,200,120,.4);
+  border-radius:var(--radius);padding:14px;margin-top:14px}
+.loading{color:var(--muted);padding:20px;text-align:center}
+footer{text-align:center;color:var(--muted);font-size:.82rem;padding:26px 10px 10px;border-top:1px solid var(--line);margin-top:30px}
+select.weekpick{margin:0 0 12px;padding:9px 12px;border-radius:10px;border:1px solid var(--line);
+  background:#180f30;color:var(--text);font-family:inherit;font-size:.95rem}
+</style>
+</head>
+<body>
+<header class="site">
+  <h1>☯ Tử Vi &amp; Phong Thủy</h1>
+  <p>Lá số • Tử vi hàng tuần • Bài viết phong thủy • Dịch vụ luận giải</p>
+</header>
+<nav class="tabs" id="nav">
+  <button data-page="home" class="active">Trang chủ</button>
+  <button data-page="tuan">Tử vi tuần</button>
+  <button data-page="baiviet">Bài viết</button>
+  <button data-page="dichvu">Dịch vụ</button>
+</nav>
+<div class="wrap">
+  <div class="status" id="status">Đang tải dữ liệu…</div>
+
+  <section class="page active" id="page-home">
+    <h2 class="sec">Chào mừng bạn</h2>
+    <div class="card">
+      <p>Trang web chia sẻ kiến thức <b>tử vi</b> và <b>phong thủy</b> theo quan niệm dân gian Việt Nam: cách xem lá số cơ bản, tử vi hàng tuần cho 12 con giáp, các bài viết về nhà cửa – vật phẩm – màu sắc hợp mệnh, cùng dịch vụ luận giải chi tiết.</p>
+      <p class="muted" style="margin-top:8px">Nội dung trên trang được quản lý bằng Google Sheet — chỉ cần sửa Sheet là web tự cập nhật, không cần biết lập trình.</p>
+    </div>
+    <h2 class="sec">Lập lá số cơ bản</h2>
+    <div class="card">
+      <form class="frm" id="laso-form">
+        <label>Họ tên</label>
+        <input type="text" id="ls-ten" placeholder="Ví dụ: Nguyễn Thị Hoa">
+        <label>Ngày sinh dương lịch</label>
+        <div style="display:flex;gap:8px">
+          <input type="number" id="ls-ngay" min="1" max="31" placeholder="Ngày" style="flex:1">
+          <input type="number" id="ls-thang" min="1" max="12" placeholder="Tháng" style="flex:1">
+          <input type="number" id="ls-nam" min="1900" max="2100" placeholder="Năm" style="flex:1">
+        </div>
+        <label>Giờ sinh</label>
+        <select id="ls-gio"></select>
+        <label>Giới tính</label>
+        <select id="ls-gioitinh">
+          <option value="nu">Nữ</option>
+          <option value="nam">Nam</option>
+        </select>
+        <button class="btn" type="submit">Xem lá số</button>
+      </form>
+      <div class="result" id="laso-result"></div>
+      <p class="note">Lá số trên chỉ mang tính tham khảo theo cách tính dân gian (Can Chi – Nạp Âm – Cung Phi Bát Trạch), không thay thế luận giải chi tiết của người có chuyên môn.</p>
+    </div>
+  </section>
+
+  <section class="page" id="page-tuan">
+    <h2 class="sec">Tử vi hàng tuần — 12 con giáp</h2>
+    <select class="weekpick" id="weekpick"></select>
+    <div class="grid zodiac" id="zodiac-grid"></div>
+    <div id="zodiac-detail"></div>
+  </section>
+
+  <section class="page" id="page-baiviet">
+    <h2 class="sec">Bài viết hay</h2>
+    <div id="article-list"></div>
+    <div id="article-detail"></div>
+  </section>
+
+  <section class="page" id="page-dichvu">
+    <h2 class="sec">Dịch vụ luận giải</h2>
+    <div id="service-list"></div>
+    <h2 class="sec">Đặt lịch tư vấn</h2>
+    <div class="card">
+      <form class="frm" id="booking-form">
+        <label>Họ tên</label>
+        <input type="text" id="bk-ten" required placeholder="Họ tên của bạn">
+        <label>Số điện thoại</label>
+        <input type="tel" id="bk-sdt" required placeholder="Ví dụ: 0901234567">
+        <label>Chọn dịch vụ</label>
+        <select id="bk-dv"></select>
+        <label>Ghi chú thêm</label>
+        <textarea id="bk-note" placeholder="Ngày sinh, nội dung bạn muốn hỏi…"></textarea>
+        <button class="btn" type="submit">Gửi đặt lịch</button>
+      </form>
+      <div id="booking-result"></div>
+      <p class="note">Bản web tĩnh: thông tin đặt lịch mới chỉ hiển thị trên trình duyệt này, chưa gửi về máy chủ. Chúng tôi sẽ sớm bổ sung kênh nhận lịch chính thức.</p>
+    </div>
+  </section>
+
+  <footer>
+    © 2026 Tử Vi &amp; Phong Thủy — Nội dung chỉ mang tính tham khảo theo quan niệm dân gian.
+  </footer>
+</div>
+<script>
+"use strict";
+/* =====================================================================
+   CẤU HÌNH GOOGLE SHEET
+   - Tạo Google Sheet với 3 tab đúng tên: BaiViet | TuViTuan | DichVu
+   - Mỗi tab có hàng đầu tiên là tên cột (xem README.md)
+   - Chia sẻ Sheet ở chế độ "Bất kỳ ai có đường liên kết đều có thể xem"
+   - Lấy ID từ link Sheet rồi dán vào SHEET_ID bên dưới
+   ===================================================================== */
+const CONFIG = { SHEET_ID: "" }; // <-- DÁN SHEET ID VÀO ĐÂY, ví dụ: "1AbC...xyz"
+
+/* ================= BẢNG CAN CHI – NẠP ÂM (60 hoa giáp) ================= */
+const CAN = ["Giáp","Ất","Bính","Đinh","Mậu","Kỷ","Canh","Tân","Nhâm","Quý"];
+const CHI = ["Tý","Sửu","Dần","Mão","Thìn","Tỵ","Ngọ","Mùi","Thân","Dậu","Tuất","Hợi"];
+const CHI_ICON = {"Tý":"🐭","Sửu":"🐮","Dần":"🐯","Mão":"🐱","Thìn":"🐲","Tỵ":"🐍","Ngọ":"🐴","Mùi":"🐐","Thân":"🐵","Dậu":"🐔","Tuất":"🐶","Hợi":"🐷"};
+/* Mỗi mệnh Nạp Âm ứng với 2 Can Chi liên tiếp, theo đúng thứ tự hoa giáp */
+const NAP_AM = [
+  {ten:"Hải Trung Kim", hanh:"Kim"},  {ten:"Lư Trung Hỏa", hanh:"Hỏa"},
+  {ten:"Đại Lâm Mộc", hanh:"Mộc"},    {ten:"Lộ Bàng Thổ", hanh:"Thổ"},
+  {ten:"Kiếm Phong Kim", hanh:"Kim"},  {ten:"Sơn Đầu Hỏa", hanh:"Hỏa"},
+  {ten:"Giản Hạ Thủy", hanh:"Thủy"},  {ten:"Thành Đầu Thổ", hanh:"Thổ"},
+  {ten:"Bạch Lạp Kim", hanh:"Kim"},   {ten:"Dương Liễu Mộc", hanh:"Mộc"},
+  {ten:"Tuyền Trung Thủy", hanh:"Thủy"},{ten:"Ốc Thượng Thổ", hanh:"Thổ"},
+  {ten:"Tích Lịch Hỏa", hanh:"Hỏa"},  {ten:"Tùng Bách Mộc", hanh:"Mộc"},
+  {ten:"Trường Lưu Thủy", hanh:"Thủy"},{ten:"Sa Trung Kim", hanh:"Kim"},
+  {ten:"Sơn Hạ Hỏa", hanh:"Hỏa"},     {ten:"Bình Địa Mộc", hanh:"Mộc"},
+  {ten:"Bích Thượng Thổ", hanh:"Thổ"},{ten:"Kim Bạch Kim", hanh:"Kim"},
+  {ten:"Phú Đăng Hỏa", hanh:"Hỏa"},   {ten:"Thiên Hà Thủy", hanh:"Thủy"},
+  {ten:"Đại Trạch Thổ", hanh:"Thổ"},  {ten:"Thoa Xuyến Kim", hanh:"Kim"},
+  {ten:"Tang Đố Mộc", hanh:"Mộc"},    {ten:"Đại Khê Thủy", hanh:"Thủy"},
+  {ten:"Sa Trung Thổ", hanh:"Thổ"},   {ten:"Thiên Thượng Hỏa", hanh:"Hỏa"},
+  {ten:"Thạch Lựu Mộc", hanh:"Mộc"},  {ten:"Đại Hải Thủy", hanh:"Thủy"}
+];
+
+/* ================= GIỜ SINH (12 khoảng) ================= */
+const GIO_SINH = [
+  {ten:"Tý", khoang:"23h – 1h"},   {ten:"Sửu", khoang:"1h – 3h"},
+  {ten:"Dần", khoang:"3h – 5h"},   {ten:"Mão", khoang:"5h – 7h"},
+  {ten:"Thìn", khoang:"7h – 9h"},  {ten:"Tỵ", khoang:"9h – 11h"},
+  {ten:"Ngọ", khoang:"11h – 13h"}, {ten:"Mùi", khoang:"13h – 15h"},
+  {ten:"Thân", khoang:"15h – 17h"},{ten:"Dậu", khoang:"17h – 19h"},
+  {ten:"Tuất", khoang:"19h – 21h"},{ten:"Hợi", khoang:"21h – 23h"}
+];
+function gioSinhForHour(h){ // h: 0-23
+  if (h >= 23 || h < 1) return GIO_SINH[0];
+  return GIO_SINH[Math.floor(h / 2)];
+}
+
+/* ================= CUNG PHI BÁT TRẠCH ================= */
+const CUNG = {
+  1:{ten:"Khảm", huong:"Bắc",     hanh:"Thủy", nhom:"Đông tứ trạch"},
+  2:{ten:"Khôn", huong:"Tây Nam", hanh:"Thổ",  nhom:"Tây tứ trạch"},
+  3:{ten:"Chấn", huong:"Đông",    hanh:"Mộc",  nhom:"Đông tứ trạch"},
+  4:{ten:"Tốn",  huong:"Đông Nam",hanh:"Mộc",  nhom:"Đông tứ trạch"},
+  6:{ten:"Càn",  huong:"Tây Bắc", hanh:"Kim",  nhom:"Tây tứ trạch"},
+  7:{ten:"Đoài", huong:"Tây",     hanh:"Kim",  nhom:"Tây tứ trạch"},
+  8:{ten:"Cấn",  huong:"Đông Bắc",hanh:"Thổ",  nhom:"Tây tứ trạch"},
+  9:{ten:"Ly",   huong:"Nam",     hanh:"Hỏa",  nhom:"Đông tứ trạch"}
+};
+function mod9(n){ return ((n % 9) + 9) % 9; }
+function cungPhiForYear(year, gender){ // gender: "nam" | "nu"
+  const last2 = year % 100;
+  let r;
+  if (year >= 2000){
+    r = (gender === "nam") ? mod9(99 - last2) : mod9(last2 + 6);
+  } else {
+    r = (gender === "nam") ? mod9(100 - last2) : mod9(last2 - 4);
+  }
+  if (r === 0) r = 9;
+  if (r === 5) r = (gender === "nam") ? 2 : 8; // nam gặp 5 về Khôn, nữ gặp 5 về Cấn
+  return CUNG[r];
+}
+function canChiForYear(year){
+  const i = mod60(year - 4);
+  return {
+    canChi: CAN[i % 10] + " " + CHI[i % 12],
+    chi: CHI[i % 12],
+    menh: NAP_AM[Math.floor(i / 2)].ten,
+    hanh: NAP_AM[Math.floor(i / 2)].hanh
+  };
+}
+function mod60(n){ return ((n % 60) + 60) % 60; }
+
+/* ================= LUẬN GIẢI NGẮN (lời văn riêng) ================= */
+const MENH_LUAN = {
+  "Kim":  "Người mệnh Kim thường quyết đoán, rõ ràng và coi trọng chữ tín. Bạn hợp với công việc cần sự chính xác và kỷ luật; trong giao tiếp, một chút mềm mỏng sẽ giúp các mối quan hệ thêm thuận hòa.",
+  "Mộc":  "Người mệnh Mộc nhân hậu, linh hoạt và giàu sức sống như cây cối vươn lên. Bạn phát huy tốt khi làm việc tập thể; hãy kiên trì theo đuổi mục tiêu dài hạn thay vì nóng vội.",
+  "Thủy": "Người mệnh Thủy thông minh, khéo léo và dễ thích nghi với hoàn cảnh. Giao tiếp là thế mạnh của bạn; chỉ cần tránh quyết định vội vàng khi cảm xúc đang chi phối.",
+  "Hỏa":  "Người mệnh Hỏa nhiệt tình, sôi nổi và có sức lan tỏa tới người xung quanh. Bạn dễ thành công trong lĩnh vực cần đam mê; hãy tiết chế sự nóng vội để giữ vững thành quả.",
+  "Thổ":  "Người mệnh Thổ điềm đạm, đáng tin cậy và có trách nhiệm. Bạn là chỗ dựa vững chắc cho gia đình và bạn bè; thỉnh thoảng hãy mở lòng đón nhận thay đổi mới."
+};
+const CUNG_LUAN = {
+  "Khảm":"Cung Khảm thuộc Đông tứ trạch, hướng tốt là hướng Bắc. Người cung này linh hoạt, giỏi ứng biến; hợp các hướng Đông tứ trạch (Đông, Đông Nam, Nam, Bắc).",
+  "Khôn":"Cung Khôn thuộc Tây tứ trạch, hướng tốt là hướng Tây Nam. Bạn hiền hòa, bao dung; hợp các hướng Tây tứ trạch (Tây, Tây Bắc, Tây Nam, Đông Bắc).",
+  "Chấn":"Cung Chấn thuộc Đông tứ trạch, hướng tốt là hướng Đông. Bạn năng động, dám nghĩ dám làm; hợp các hướng Đông tứ trạch (Đông, Đông Nam, Nam, Bắc).",
+  "Tốn":"Cung Tốn thuộc Đông tứ trạch, hướng tốt là hướng Đông Nam. Bạn nhẹ nhàng, khéo léo trong giao tiếp; hợp các hướng Đông tứ trạch.",
+  "Càn":"Cung Càn thuộc Tây tứ trạch, hướng tốt là hướng Tây Bắc. Bạn có tố chất lãnh đạo, quyết đoán; hợp các hướng Tây tứ trạch.",
+  "Đoài":"Cung Đoài thuộc Tây tứ trạch, hướng tốt là hướng Tây. Bạn vui vẻ, giỏi kết nối mọi người; hợp các hướng Tây tứ trạch.",
+  "Cấn":"Cung Cấn thuộc Tây tứ trạch, hướng tốt là hướng Đông Bắc. Bạn chững chạc, kiên định; hợp các hướng Tây tứ trạch (Tây, Tây Bắc, Tây Nam, Đông Bắc).",
+  "Ly":"Cung Ly thuộc Đông tứ trạch, hướng tốt là hướng Nam. Bạn thông minh, sáng tạo; hợp các hướng Đông tứ trạch (Đông, Đông Nam, Nam, Bắc)."
+};
+
+/* ================= DỮ LIỆU MẪU (dùng khi chưa gắn Google Sheet) ================= */
+const SAMPLE_DATA = {
+BaiViet: [
+ {Ngay:"10/10/2026", ChuyenMuc:"Phong thủy", TieuDe:"Cửa chính: nơi đón khí của cả ngôi nhà",
+  MoTa:"Vì sao cửa chính được xem là 'miệng' đón tài lộc và cách giữ cho nó luôn thông thoáng.",
+  NoiDung:"Theo quan niệm phong thủy dân gian, cửa chính là nơi đón dòng khí vào nhà, ví von như 'miệng' của ngôi nhà. Cửa chính sạch sẽ, sáng sủa thì gia chủ làm ăn thuận lợi, khách đến nhà cũng cảm thấy dễ chịu.\n\nĐiều đầu tiên cần làm là giữ khu vực trước cửa luôn gọn gàng: không để giày dép chất đống, không kê vật cản lối đi. Ánh sáng đầy đủ cũng rất quan trọng — một bóng đèn vàng ấm trước hiên vừa đẹp vừa tạo cảm giác an toàn.\n\nNếu nhà có hai cửa thông thẳng nhau từ trước ra sau, dân gian cho rằng khí vào rồi đi tuốt ra ngoài, khó tụ lại. Cách hóa giải đơn giản là đặt một chậu cây hoặc bình phong nhỏ ở giữa để dòng khí 'chậm lại', vừa đẹp mắt vừa hợp phong thủy.",
+  Anh:""},
+ {Ngay:"11/10/2026", ChuyenMuc:"Phong thủy", TieuDe:"Cây lưỡi hổ: vừa đẹp vừa hợp phong thủy",
+  MoTa:"Loại cây quen thuộc trong nhiều gia đình và những lưu ý khi đặt trong nhà.",
+  NoiDung:"Cây lưỡi hổ có lá mọc thẳng đứng, viền vàng, được nhiều người ưa chuộng vì dễ chăm và hợp với mọi không gian. Trong phong thủy dân gian, dáng lá vươn lên tượng trưng cho ý chí mạnh mẽ, xua đi điều không may.\n\nVị trí đẹp nhất để đặt lưỡi hổ là phòng khách hoặc gần cửa ra vào — những nơi có nhiều ánh sáng tự nhiên. Tránh đặt trong phòng ngủ vì cây thải khí vào ban đêm, lại thêm dáng lá nhọn dễ gây cảm giác bất an khi ngủ.\n\nChăm cây cũng là một cách 'dưỡng khí' cho nhà: lá bụi bẩn thì lau sạch, cây héo úa thì thay kịp thời. Một chậu cây xanh tốt đặt đúng chỗ sẽ khiến cả căn phòng bừng sáng.",
+  Anh:""},
+ {Ngay:"12/10/2026", ChuyenMuc:"Phong thủy", TieuDe:"Mẹo dân gian: bát muối chanh hút năng lượng xấu",
+  MoTa:"Một mẹo dân gian được nhiều người áp dụng để làm sạch không gian sống.",
+  NoiDung:"Trong dân gian có mẹo đặt một bát muối hạt cùng vài lát chanh ở góc nhà để 'hút' những điều không may, giúp không gian nhẹ nhàng hơn. Dù chưa có căn cứ khoa học, nhiều gia đình vẫn làm theo như một thói quen an tâm.\n\nCách làm rất đơn giản: cho muối hạt vào khoảng 3/4 bát, đặt vài lát chanh tươi lên trên, để ở góc phòng khách hoặc góc bếp. Khi chanh héo hoặc muối vón cục thì thay bát mới.\n\nĐiều quan trọng nhất vẫn là giữ nhà cửa sạch sẽ, thoáng mát. Mẹo dân gian chỉ là gia vị tinh thần — một ngôi nhà gọn gàng, đầy nắng mới là phong thủy tốt nhất.",
+  Anh:""},
+ {Ngay:"13/10/2026", ChuyenMuc:"Phong thủy", TieuDe:"Gương trong nhà: đặt đâu thì tốt?",
+  MoTa:"Gương giúp nhà sáng và rộng hơn, nhưng đặt sai vị trí dễ gây bất an.",
+  NoiDung:"Gương là vật dụng quen thuộc giúp căn phòng trông rộng và sáng hơn nhờ phản chiếu ánh sáng. Về phong thủy, gương còn được xem là vật 'nhân đôi' năng lượng của nơi nó soi chiếu.\n\nNên đặt gương ở phòng khách để nhân đôi không khí sum họp, hoặc đối diện cửa sổ có cảnh đẹp để 'đưa' thiên nhiên vào nhà. Phòng ăn đặt gương cũng được nhiều người ưa chuộng vì tượng trưng cho sự no đủ.\n\nTránh đặt gương đối diện giường ngủ — nửa đêm tỉnh giấc thấy bóng mình trong gương dễ giật mình. Cũng không nên đặt hai gương đối diện nhau tạo hành lang phản chiếu vô tận, gây cảm giác rối mắt, bất an.",
+  Anh:""},
+ {Ngay:"14/10/2026", ChuyenMuc:"Tử vi", TieuDe:"Chọn màu sắc hợp mệnh theo ngũ hành",
+  MoTa:"Nguyên tắc tương sinh đơn giản để chọn màu quần áo, xe cộ, vật dụng hằng ngày.",
+  NoiDung:"Theo ngũ hành, mỗi mệnh hợp với những màu sắc nhất định dựa trên nguyên tắc tương sinh: Mộc sinh Hỏa, Hỏa sinh Thổ, Thổ sinh Kim, Kim sinh Thủy, Thủy sinh Mộc. Chọn màu hợp mệnh được xem là cách đơn giản để tăng sự tự tin.\n\nCụ thể: mệnh Kim hợp trắng, vàng, nâu; mệnh Mộc hợp xanh lá, đen, xanh dương; mệnh Thủy hợp đen, xanh dương, trắng; mệnh Hỏa hợp đỏ, cam, xanh lá; mệnh Thổ hợp vàng, nâu, đỏ.\n\nBạn không cần mặc đúng màu hợp mệnh mỗi ngày — chỉ cần điểm xuyết qua phụ kiện như ví, đồng hồ, ốp điện thoại là đủ. Quan trọng nhất vẫn là cảm thấy thoải mái và tự tin với lựa chọn của mình.",
+  Anh:""},
+ {Ngay:"15/10/2026", ChuyenMuc:"Phong tục", TieuDe:"Tục lệ đầu năm: xông đất và hái lộc",
+  MoTa:"Những phong tục đẹp ngày Tết cầu mong một năm bình an, may mắn.",
+  NoiDung:"Xông đất đầu năm là phong tục lâu đời của người Việt: người đầu tiên bước vào nhà sau giao thừa được xem là mang theo vận khí cho cả năm của gia chủ. Vì vậy các gia đình thường chọn người hợp tuổi, vui vẻ để 'xông nhà'.\n\nHái lộc đầu xuân là tục bẻ một cành lộc non mang về nhà với mong muốn năm mới sinh sôi, phát triển. Ngày nay nhiều người thay bằng cành lộc tượng trưng để bảo vệ cây xanh.\n\nDù tin hay không, những phong tục này đều gửi gắm ước mong tốt đẹp: một năm bình an, gia đình sum họp. Giữ gìn phong tục cũng là giữ gìn nét đẹp văn hóa của dân tộc."
+,
+  Anh:""}
+],
+TuViTuan: [
+ {Tuan:"12/10 – 18/10/2026", ConGiap:"Tý", TongQuan:"Tuần này của tuổi Tý diễn ra khá êm đềm, mọi việc tiến triển đúng kế hoạch.", SuNghiep:"Công việc ổn định, nỗ lực của bạn được cấp trên ghi nhận.", TaiLoc:"Thu nhập giữ vững, chưa nên đầu tư lớn trong tuần này.", TinhDuyen:"Tình cảm ấm áp; người độc thân có cơ hội gặp gỡ mới.", SucKhoe:"Sức khỏe tốt, lưu ý ngủ đủ giấc.", Diem:7.5, MauMayMan:"Xanh dương", SoMayMan:"2, 9"},
+ {Tuan:"12/10 – 18/10/2026", ConGiap:"Sửu", TongQuan:"Tuần cần sự kiên nhẫn của tuổi Sửu, đừng vội vàng quyết định.", SuNghiep:"Có việc phát sinh bất ngờ, bình tĩnh xử lý sẽ qua.", TaiLoc:"Chi tiêu nên tiết chế, tránh cho vay mượn.", TinhDuyen:"Nên lắng nghe nhiều hơn để tránh hiểu lầm.", SucKhoe:"Chú ý xương khớp khi thời tiết thay đổi.", Diem:7.0, MauMayMan:"Nâu đất", SoMayMan:"5, 8"},
+ {Tuan:"12/10 – 18/10/2026", ConGiap:"Dần", TongQuan:"Năng lượng dồi dào, thích hợp để khởi động việc mới.", SuNghiep:"Có cơ hội thể hiện năng lực trước tập thể.", TaiLoc:"Tài lộc khởi sắc nhẹ vào cuối tuần.", TinhDuyen:"Người có đôi nên dành thời gian cho nhau nhiều hơn.", SucKhoe:"Thể lực tốt, phù hợp vận động ngoài trời.", Diem:8.0, MauMayMan:"Xanh lá", SoMayMan:"3, 7"},
+ {Tuan:"12/10 – 18/10/2026", ConGiap:"Mão", TongQuan:"Tuần thuận lợi cho các mối quan hệ của tuổi Mão.", SuNghiep:"Được đồng nghiệp hỗ trợ, việc khó cũng hóa dễ.", TaiLoc:"Có lộc nhỏ bất ngờ, nên tích lũy.", TinhDuyen:"Tình duyên nở rộ, thích hợp tỏ tình.", SucKhoe:"Tinh thần thoải mái, ăn ngủ điều độ.", Diem:8.2, MauMayMan:"Hồng", SoMayMan:"1, 6"},
+ {Tuan:"12/10 – 18/10/2026", ConGiap:"Thìn", TongQuan:"Có quý nhân giúp đỡ, sự nghiệp của tuổi Thìn khởi sắc.", SuNghiep:"Dự án ấp ủ lâu nay có tín hiệu tích cực.", TaiLoc:"Tài chính dư dả, có thể tính chuyện đầu tư nhỏ.", TinhDuyen:"Gia đạo hòa thuận, người thân quan tâm nhau.", SucKhoe:"Sức khỏe ổn định.", Diem:8.5, MauMayMan:"Vàng", SoMayMan:"4, 8"},
+ {Tuan:"12/10 – 18/10/2026", ConGiap:"Tỵ", TongQuan:"Tuổi Tỵ nên thận trọng trong lời ăn tiếng nói tuần này.", SuNghiep:"Tránh tranh cãi nơi công sở, dĩ hòa vi quý.", TaiLoc:"Giữ tiền chắc tay, đề phòng hao hụt lặt vặt.", TinhDuyen:"Nhường nhịn nhau một chút, sóng gió sẽ qua.", SucKhoe:"Lưu ý hệ tiêu hóa, ăn uống đúng bữa.", Diem:6.8, MauMayMan:"Tím", SoMayMan:"2, 5"},
+ {Tuan:"12/10 – 18/10/2026", ConGiap:"Ngọ", TongQuan:"Tài lộc của tuổi Ngọ có dấu hiệu khởi sắc giữa tuần.", SuNghiep:"Công việc bận rộn nhưng kết quả xứng đáng.", TaiLoc:"Có thêm nguồn thu phụ, nên cân đối chi tiêu.", TinhDuyen:"Tình cảm tiến triển tốt đẹp.", SucKhoe:"Đừng làm việc quá sức, nhớ nghỉ ngơi.", Diem:7.8, MauMayMan:"Đỏ", SoMayMan:"9, 3"},
+ {Tuan:"12/10 – 18/10/2026", ConGiap:"Mùi", TongQuan:"Tuần phù hợp để tuổi Mùi nghỉ ngơi, sắp xếp lại công việc.", SuNghiep:"Nên hoàn tất việc tồn đọng thay vì ôm thêm việc mới.", TaiLoc:"Tài chính bình ổn, không có biến động lớn.", TinhDuyen:"Quan tâm gia đình nhiều hơn sẽ được đền đáp.", SucKhoe:"Ngủ sớm dậy sớm giúp tinh thần sảng khoái.", Diem:7.2, MauMayMan:"Cam", SoMayMan:"6, 8"},
+ {Tuan:"12/10 – 18/10/2026", ConGiap:"Thân", TongQuan:"Ý tưởng sáng tạo của tuổi Thân được đánh giá cao.", SuNghiep:"Mạnh dạn đề xuất, cấp trên sẽ lắng nghe.", TaiLoc:"Có cơ hội kiếm thêm từ sở trường cá nhân.", TinhDuyen:"Người độc thân dễ gặp đối tượng phù hợp.", SucKhoe:"Sức khỏe tốt.", Diem:8.1, MauMayMan:"Trắng", SoMayMan:"1, 7"},
+ {Tuan:"12/10 – 18/10/2026", ConGiap:"Dậu", TongQuan:"Tuổi Dậu cần giữ bình tĩnh trước áp lực tuần này.", SuNghiep:"Việc dồn dập, nên ưu tiên theo mức độ quan trọng.", TaiLoc:"Tránh đầu tư theo cảm tính.", TinhDuyen:"Chia sẻ thẳng thắn giúp hóa giải hiểu lầm.", SucKhoe:"Chú ý mắt khi làm việc lâu với màn hình.", Diem:6.9, MauMayMan:"Bạc", SoMayMan:"4, 9"},
+ {Tuan:"12/10 – 18/10/2026", ConGiap:"Tuất", TongQuan:"Tình duyên khởi sắc, gia đạo của tuổi Tuất hòa thuận.", SuNghiep:"Công việc tiến triển đều, có người hỗ trợ.", TaiLoc:"Thu chi cân đối, cuối tuần có tin vui nhỏ.", TinhDuyen:"Người có đôi thêm gắn bó.", SucKhoe:"Duy trì thói quen vận động nhẹ.", Diem:7.9, MauMayMan:"Xanh rêu", SoMayMan:"3, 5"},
+ {Tuan:"12/10 – 18/10/2026", ConGiap:"Hợi", TongQuan:"Tuổi Hợi nên chú ý sức khỏe, tránh thức khuya.", SuNghiep:"Làm việc đúng tiến độ, không cần ôm đồm.", TaiLoc:"Tài lộc trung bình, nên tích lũy.", TinhDuyen:"Tình cảm ổn định, cần thêm sự quan tâm.", SucKhoe:"Nghỉ ngơi đầy đủ, hạn chế đồ cay nóng.", Diem:7.1, MauMayMan:"Đen", SoMayMan:"2, 6"}
+],
+DichVu: [
+ {TenDichVu:"Chấm lá số trọn đời", MoTa:"Luận giải chi tiết lá số tử vi: tính cách, sự nghiệp, tài lộc, tình duyên và các đại hạn trong đời.", Gia:"500.000đ"},
+ {TenDichVu:"Xem hạn năm", MoTa:"Dự đoán vận hạn từng năm: tháng tốt xấu, việc nên làm và nên tránh để chủ động kế hoạch.", Gia:"200.000đ"},
+ {TenDichVu:"Tử vi cho bé dưới 13 tuổi", MoTa:"Xem tính cách, sức khỏe và định hướng nuôi dạy phù hợp với lá số của bé.", Gia:"300.000đ"},
+ {TenDichVu:"Phong thủy nhà đất", MoTa:"Tư vấn hướng nhà, bố trí phòng ốc, bếp và bàn thờ hợp tuổi gia chủ.", Gia:"2.000.000đ"},
+ {TenDichVu:"Chọn ngày tốt", MoTa:"Chọn ngày giờ đẹp cho cưới hỏi, khai trương, động thổ, xuất hành theo tuổi.", Gia:"150.000đ"},
+ {TenDichVu:"Đặt tên con", MoTa:"Gợi ý tên hay, hợp mệnh và hợp tuổi bố mẹ, kèm phân tích ý nghĩa.", Gia:"300.000đ"},
+ {TenDichVu:"Tình duyên hôn nhân", MoTa:"Xem tuổi hợp khắc vợ chồng, thời điểm thuận lợi cho hôn nhân.", Gia:"250.000đ"},
+ {TenDichVu:"Chọn nghề hợp mệnh", MoTa:"Tư vấn ngành nghề, hướng phát triển sự nghiệp phù hợp với mệnh và lá số.", Gia:"200.000đ"}
+]
+};
+
+/* ================= NẠP DỮ LIỆU TỪ GOOGLE SHEET ================= */
+function gvizDate(v){
+  if (typeof v === "string"){
+    const m = v.match(/Date\((\d+),(\d+),(\d+)/);
+    if (m) return m[3] + "/" + (parseInt(m[2],10)+1) + "/" + m[1];
+  }
+  return v;
+}
+async function loadSheetTab(sheetId, tab){
+  const url = "https://docs.google.com/spreadsheets/d/" + sheetId +
+              "/gviz/tq?tqx=out:json&sheet=" + encodeURIComponent(tab);
+  const res = await fetch(url);
+  if (!res.ok) throw new Error("HTTP " + res.status);
+  const text = await res.text();
+  const m = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\);?\s*$/);
+  if (!m) throw new Error("Định dạng dữ liệu không đúng");
+  const json = JSON.parse(m[1]);
+  if (json.status === "error") throw new Error(json.errors ? json.errors[0].detailed_message : "Lỗi sheet");
+  const cols = json.table.cols.map(c => c.label);
+  return json.table.rows.map(r => {
+    const o = {};
+    cols.forEach((label, i) => {
+      const cell = r.c[i];
+      let val = "";
+      if (cell){
+        val = (cell.f !== undefined && cell.f !== null && cell.f !== "") ? cell.f : cell.v;
+        val = gvizDate(val);
+      }
+      o[label] = (val === null || val === undefined) ? "" : val;
+    });
+    return o;
+  });
+}
+let DATA = null;
+async function loadData(){
+  const status = document.getElementById("status");
+  if (CONFIG.SHEET_ID && CONFIG.SHEET_ID.trim()){
+    try{
+      const id = CONFIG.SHEET_ID.trim();
+      status.textContent = "Đang nạp dữ liệu từ Google Sheet…";
+      const [bv, tv, dv] = await Promise.all([
+        loadSheetTab(id, "BaiViet"), loadSheetTab(id, "TuViTuan"), loadSheetTab(id, "DichVu")
+      ]);
+      DATA = { BaiViet: bv, TuViTuan: tv, DichVu: dv };
+      status.textContent = "✅ Đã nạp dữ liệu từ Google Sheet của bạn (" +
+        bv.length + " bài viết, " + tv.length + " mục tử vi, " + dv.length + " dịch vụ).";
+    }catch(e){
+      DATA = SAMPLE_DATA;
+      status.textContent = "⚠️ Không đọc được Google Sheet (" + e.message + ") — đang hiển thị dữ liệu mẫu. Kiểm tra SHEET_ID và quyền chia sẻ Sheet.";
+    }
+  } else {
+    DATA = SAMPLE_DATA;
+    status.textContent = "Đang dùng dữ liệu mẫu. Muốn web lấy nội dung từ Google Sheet của bạn, hãy dán SHEET_ID vào file index.html (xem README.md).";
+  }
+  renderAll();
+}
+
+/* ================= TIỆN ÍCH RENDER ================= */
+function esc(s){ return String(s == null ? "" : s); }
+function setHTML(id, html){ document.getElementById(id).innerHTML = html; }
+function paras(text){
+  return esc(text).split(/\n\s*\n/).map(p => "<p>" + p.replace(/\n/g, "<br>") + "</p>").join("");
+}
+
+/* ================= ĐIỀU HƯỚNG ================= */
+document.getElementById("nav").addEventListener("click", e => {
+  const btn = e.target.closest("button[data-page]");
+  if (!btn) return;
+  document.querySelectorAll("#nav button").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  document.querySelectorAll("section.page").forEach(s => s.classList.remove("active"));
+  document.getElementById("page-" + btn.dataset.page).classList.add("active");
+  window.scrollTo({top: 0, behavior: "smooth"});
+});
+function goPage(p){
+  document.querySelector('#nav button[data-page="' + p + '"]').click();
+}
+
+/* ================= TRANG CHỦ: FORM LÁ SỐ ================= */
+(function initGio(){
+  const sel = document.getElementById("ls-gio");
+  GIO_SINH.forEach((g, i) => {
+    const o = document.createElement("option");
+    o.value = i; o.textContent = "Giờ " + g.ten + " (" + g.khoang + ")";
+    sel.appendChild(o);
+  });
+  sel.value = 4; // mặc định giờ Thìn
+})();
+document.getElementById("laso-form").addEventListener("submit", e => {
+  e.preventDefault();
+  const ten = document.getElementById("ls-ten").value.trim();
+  const d = parseInt(document.getElementById("ls-ngay").value, 10);
+  const m = parseInt(document.getElementById("ls-thang").value, 10);
+  const y = parseInt(document.getElementById("ls-nam").value, 10);
+  const gioIdx = parseInt(document.getElementById("ls-gio").value, 10);
+  const gt = document.getElementById("ls-gioitinh").value;
+  const box = document.getElementById("laso-result");
+  if (!ten || !d || !m || !y || d < 1 || d > 31 || m < 1 || m > 12 || y < 1900 || y > 2100){
+    box.innerHTML = '<div class="card"><p style="color:#f0a0a0">Bạn vui lòng nhập đầy đủ họ tên và ngày/tháng/năm sinh hợp lệ.</p></div>';
+    return;
+  }
+  const cc = canChiForYear(y);
+  const cung = cungPhiForYear(y, gt);
+  const gio = GIO_SINH[gioIdx];
+  box.innerHTML =
+    '<div class="card"><h3>Lá số của ' + esc(ten) + '</h3>' +
+    kv("Ngày sinh (dương lịch)", d + "/" + m + "/" + y) +
+    kv("Giờ sinh", "Giờ " + gio.ten + " (" + gio.khoang + ")") +
+    kv("Can Chi năm sinh", cc.canChi) +
+    kv("Tuổi con giáp", "Tuổi " + cc.chi + " " + (CHI_ICON[cc.chi] || "")) +
+    kv("Mệnh (Nạp Âm)", cc.menh + " — hành " + cc.hanh) +
+    kv("Cung Phi Bát Trạch", "Cung " + cung.ten + " (" + cung.nhom + ", hướng tốt: " + cung.huong + ")") +
+    '<h3 style="margin-top:14px">Luận giải sơ lược</h3>' +
+    '<p><b style="color:var(--gold2)">Theo mệnh ' + cc.hanh + ":</b> " + esc(MENH_LUAN[cc.hanh]) + "</p>" +
+    '<p style="margin-top:8px"><b style="color:var(--gold2)">Theo cung ' + cung.ten + ":</b> " + esc(CUNG_LUAN[cung.ten]) + "</p>" +
+    "</div>";
+  function kv(k, v){ return '<div class="kv"><span>' + k + '</span><b>' + esc(v) + '</b></div>'; }
+});
+
+/* ================= TỬ VI TUẦN ================= */
+let curWeek = "";
+function renderTuan(){
+  const rows = DATA.TuViTuan;
+  const weeks = [...new Set(rows.map(r => r.Tuan).filter(Boolean))];
+  const pick = document.getElementById("weekpick");
+  pick.innerHTML = weeks.map(w => '<option value="' + esc(w) + '">' + esc("Tuần " + w) + "</option>").join("");
+  if (!weeks.includes(curWeek)) curWeek = weeks[0] || "";
+  pick.value = curWeek;
+  pick.onchange = () => { curWeek = pick.value; renderTuanGrid(); setHTML("zodiac-detail", ""); };
+  renderTuanGrid();
+}
+function renderTuanGrid(){
+  const rows = DATA.TuViTuan.filter(r => r.Tuan === curWeek);
+  const order = CHI.slice();
+  rows.sort((a, b) => order.indexOf(a.ConGiap) - order.indexOf(b.ConGiap));
+  setHTML("zodiac-grid", rows.map((r, i) =>
+    '<button class="zbtn" data-i="' + i + '"><span class="em">' + (CHI_ICON[r.ConGiap] || "☯") +
+    '</span>Tuổi ' + esc(r.ConGiap) + '<br><span class="muted">Điểm ' + esc(r.Diem) + '</span></button>'
+  ).join(""));
+  document.querySelectorAll("#zodiac-grid .zbtn").forEach(b =>
+    b.addEventListener("click", () => showZodiac(rows[parseInt(b.dataset.i, 10)])));
+}
+function showZodiac(r){
+  if (!r) return;
+  setHTML("zodiac-detail",
+    '<div class="card"><button class="backbtn" id="zb">← Tất cả con giáp</button>' +
+    '<h3><span style="font-size:1.5rem">' + (CHI_ICON[r.ConGiap] || "") + '</span> Tử vi tuổi ' + esc(r.ConGiap) +
+    ' <span class="muted">— tuần ' + esc(r.Tuan) + '</span></h3>' +
+    '<div class="score"><span class="bigscore">' + esc(r.Diem) + '</span></div>' +
+    '<p>' + esc(r.TongQuan) + '</p>' +
+    kv("💼 Sự nghiệp", r.SuNghiep) + kv("💰 Tài lộc", r.TaiLoc) +
+    kv("❤️ Tình duyên", r.TinhDuyen) + kv("💪 Sức khỏe", r.SucKhoe) +
+    kv("🎨 Màu may mắn", r.MauMayMan) + kv("🔢 Số may mắn", r.SoMayMan) +
+    "</div>");
+  document.getElementById("zb").addEventListener("click", () => setHTML("zodiac-detail", ""));
+  document.getElementById("zodiac-detail").scrollIntoView({behavior: "smooth", block: "start"});
+  function kv(k, v){ return '<div class="kv"><span>' + k + '</span><b>' + esc(v) + '</b></div>'; }
+}
+
+/* ================= BÀI VIẾT ================= */
+function renderBaiViet(){
+  const rows = DATA.BaiViet;
+  setHTML("article-list", rows.map((a, i) =>
+    '<button class="list-item" data-i="' + i + '"><span class="tag">' + esc(a.ChuyenMuc) + '</span><br>' +
+    '<b>' + esc(a.TieuDe) + '</b><br><span class="date">' + esc(a.Ngay) + '</span><br>' +
+    '<span class="muted">' + esc(a.MoTa) + '</span></button>'
+  ).join("") || '<p class="muted">Chưa có bài viết.</p>');
+  document.querySelectorAll("#article-list .list-item").forEach(b =>
+    b.addEventListener("click", () => showArticle(rows[parseInt(b.dataset.i, 10)])));
+}
+function showArticle(a){
+  if (!a) return;
+  setHTML("article-detail",
+    '<div class="card article-body"><button class="backbtn" id="ab">← Danh sách bài viết</button>' +
+    '<span class="tag" style="display:inline-block;font-size:.75rem;color:#2a1a05;background:var(--gold2);border-radius:999px;padding:2px 10px;font-weight:600">' +
+    esc(a.ChuyenMuc) + '</span>' +
+    '<h3 style="font-size:1.25rem;margin:8px 0 2px">' + esc(a.TieuDe) + '</h3>' +
+    '<p class="date" style="color:var(--muted);font-size:.82rem;margin-bottom:14px">' + esc(a.Ngay) + '</p>' +
+    paras(a.NoiDung) + "</div>");
+  document.getElementById("ab").addEventListener("click", () => setHTML("article-detail", ""));
+  document.getElementById("article-detail").scrollIntoView({behavior: "smooth", block: "start"});
+}
+
+/* ================= DỊCH VỤ + ĐẶT LỊCH ================= */
+function renderDichVu(){
+  const rows = DATA.DichVu;
+  setHTML("service-list", rows.map(s =>
+    '<div class="card"><h3>' + esc(s.TenDichVu) + '</h3><p class="muted">' + esc(s.MoTa) +
+    '</p><p style="margin-top:8px"><b style="color:var(--gold2)">Giá tham khảo: ' + esc(s.Gia) + '</b></p></div>'
+  ).join("") || '<p class="muted">Chưa có dịch vụ.</p>');
+  const sel = document.getElementById("bk-dv");
+  sel.innerHTML = rows.map(s => '<option>' + esc(s.TenDichVu) + '</option>').join("");
+}
+document.getElementById("booking-form").addEventListener("submit", e => {
+  e.preventDefault();
+  const ten = document.getElementById("bk-ten").value.trim();
+  const sdt = document.getElementById("bk-sdt").value.trim();
+  const dv = document.getElementById("bk-dv").value;
+  setHTML("booking-result",
+    '<div class="success">✅ <b>Đã ghi nhận đặt lịch của bạn!</b><br>' +
+    'Họ tên: ' + esc(ten) + '<br>Số điện thoại: ' + esc(sdt) + '<br>Dịch vụ: ' + esc(dv) +
+    '<br><span class="muted">Bản web tĩnh: thông tin mới chỉ hiển thị trên trình duyệt này, chưa gửi về máy chủ. Chúng tôi sẽ liên hệ lại qua số điện thoại bạn đã để lại.</span></div>');
+  e.target.reset();
+});
+
+function renderAll(){ renderTuan(); renderBaiViet(); renderDichVu(); }
+loadData();
+
+/* Cho phép kiểm thử logic bằng Node (không ảnh hưởng trình duyệt) */
+if (typeof module !== "undefined" && module.exports){
+  module.exports = { CONFIG, CAN, CHI, NAP_AM, GIO_SINH, gioSinhForHour, canChiForYear, cungPhiForYear, SAMPLE_DATA };
+}
+</script>
+</body>
+</html>
